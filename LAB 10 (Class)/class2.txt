@@ -1,0 +1,162 @@
+#include "stdafx.h"
+#include<iostream>
+using namespace std;
+#include<string>;
+class student
+{
+private:
+	string Id;
+	string name;
+	int mark[3];
+	//int* mark;
+	float gpa;
+public:
+	student(){ Id = "20172"; name = " ";
+	gpa = 0;
+	for (int i = 0; i < 3; i++)
+		mark[i] = 0;
+	}
+	student(string i, string n, float g)
+	{
+		Id = i; name = n; gpa = g;
+	}
+	student(string i, string n, int m[3])
+	{
+		Id = i; name = n; 
+		for (int i = 0; i < 3; i++)
+			mark[i] = m[i];
+	}
+	student(string i, string n)
+	{
+		Id = i; name = n; gpa = 0;
+	}
+	/*student(){ Id = "20172"; name = " ";
+	gpa = 0;
+	mark=new int [3];
+	for (int i = 0; i < 3; i++)
+		mark[i] = 0;
+	}
+	~student(){ delete[]mark; }
+	*/
+	void SetId(string i){ Id = i; }
+	void Setname(string n){ name = n; }
+	void SetGpa(float g){ gpa = g; }
+	void SetMarks(int m[3]){
+		for (int i = 0; i < 3; i++)
+			mark[i] = m[i];
+	}
+	void Set1Mark(int index, int v){ mark[index] = v; }
+	void SetAll(string i, string n, float g)
+	{
+		Id = i; //SetId(i);
+		name = n;//Setnmae(n);
+		gpa = g;//SetGpa(g);
+	}
+	string GetId(){
+		return Id;
+	}
+	string Getname(){
+		return name;
+	}
+	float GetGpa(){
+		return gpa;
+	}
+	int* GetMarks(){ return &mark[0]; }
+	int Get1Mark(int index){ return mark[index]; }
+	float CalculateGpa(){
+		int sum = 0;
+		for (int i = 0; i < 3; i++)
+			sum += mark[i];
+		return (float)sum / 3;
+	}
+	void GetAll(string &i, string &n, float &g)
+	{
+		i = Id;//i=GetId();
+		n = name;//n=Getname();
+		g = gpa;//g=Getgpa();
+	}
+	void PrintStudent()
+	{
+		cout << "Id :" << Id << endl;
+		cout << "Name:" << Getname() << endl;
+		cout << "Gpa:" << gpa << endl;
+		cout << " the marks are:" << endl;
+		for (int i = 0; i < 3; i++)
+			cout << mark[i] << endl;
+	}
+	void print2()
+	{
+		string i, n;
+		float g;
+		GetAll(i, n, g);
+		cout << "Id:" << i << endl;
+		cout << "Name:" << n << endl;
+		cout << "GPA:" << g << endl;
+
+	}
+};
+
+void FillStudents(student s[4])
+{
+	string ii, n;
+	int m[3];
+	for (int i = 0; i < 4; i++)
+	{
+		cout << "enter id then name" << endl;
+		cin >> ii >> n;
+		cout << "enter marks" << endl;
+		for (int j = 0; j < 3; j++)
+			cin >> m[j];
+		student ss(ii, n, m);
+		s[i] = ss;
+		/*s[i].SetAll(ii, n, 0);
+		s[i].SetMarks(m);*/
+	}
+		
+	}
+void CalculateAllGpas(student s[4])
+{
+	float g;
+	for (int i = 0; i < 4; i++)
+	{
+		g=s[i].CalculateGpa();
+		s[i].SetGpa(g);
+	}
+}
+void PrintStudents(student s[4])
+{
+	for (int i = 0; i < 4; i++)
+		s[i].PrintStudent();
+} 
+
+
+void main()
+{
+	int mm[3] = { 40, 90, 50 };
+	student stu;
+
+	student ss("123","Dima");
+	ss.SetMarks(mm);
+	float g = ss.CalculateGpa();
+	ss.SetGpa(g);
+	ss.PrintStudent();
+	student st[4];
+	FillStudents(st);
+	CalculateAllGpas(st);
+	PrintStudents(st);
+	int n;
+	cin >> n;
+	student* s = new student[n];
+	string ii, nn;
+	int m[3];
+	for (int i = 0; i < 4; i++)
+	{
+		cout << "enter id then name" << endl;
+		cin >> ii >> nn;
+		cout << "enter marks" << endl;
+		for (int j = 0; j < 3; j++)
+			cin >> m[j];
+		(s + i)->SetMarks(m);
+		(s + i)->SetAll(ii, nn, 0);
+	}
+}
